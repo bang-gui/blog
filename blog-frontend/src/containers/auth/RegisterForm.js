@@ -29,9 +29,9 @@ const RegisterForm = ({ history }) => {
   // 폼 등록 이벤트 핸들러
   const onSubmit = e => {
     e.preventDefault();
-    const { username, password, passwordConfirm } = form;
+    const { username, password, passwordConfirm, invitecode } = form;
     // 하나라도 비어있다면
-    if ([username, password, passwordConfirm].includes('')) {
+    if ([username, password, passwordConfirm, invitecode].includes('')) {
       setError('빈 칸을 모두 입력하세요.');
       return;
     }
@@ -40,6 +40,11 @@ const RegisterForm = ({ history }) => {
       setError('비밀번호가 일치하지 않습니다.');
       changeField({ form: 'register', key: 'password', value: '' });
       changeField({ form: 'register', key: 'passwordConfirm', value: '' });
+      return;
+    }
+    if(invitecode !== '19141914'){
+      setError('존재하지 않는 초대코드입니다.');
+      changeField({ form: 'register', key:'invitecode', value:''});
       return;
     }
     dispatch(register({ username, password }));

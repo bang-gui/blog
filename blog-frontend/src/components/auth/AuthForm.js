@@ -100,6 +100,15 @@ const AuthForm = ({ type, form, onChange, onSubmit, error }) => {
             value={form.passwordConfirm}
           />
         )}
+        {type === 'register' && (
+          <StyledInput
+            name="invitecode"
+            placeholder="초대코드 확인"
+            type="password"
+            onChange={onChange}
+            value={form.invitecode}
+          />
+        )}
         {error && <ErrorMessage>{error}</ErrorMessage>}
         <ButtonWithMarginTop cyan fullWidth style={{ marginTop: '1rem' }}>
           {text}

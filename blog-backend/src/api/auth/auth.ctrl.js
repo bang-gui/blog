@@ -63,7 +63,7 @@ export const login = async ctx => {
   const { username, password } = ctx.request.body;
 
   // username, password 가 없으면 에러 처리
-  if (!username || !password) {
+  if (!username || !password ) {
     ctx.status = 401; // Unauthorized
     return;
   }
