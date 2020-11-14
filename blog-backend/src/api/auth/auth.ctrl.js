@@ -17,6 +17,7 @@ export const register = async ctx => {
       .max(20)
       .required(),
     password: Joi.string().required(),
+    invitecode: Joi.string().required(),
   });
   const result = Joi.validate(ctx.request.body, schema);
   if (result.error) {
@@ -25,12 +26,17 @@ export const register = async ctx => {
     return;
   }
 
-  const { username, password } = ctx.request.body;
+  const { username, password, invitecode } = ctx.request.body;
   try {
     // username  이 이미 존재하는지 확인
     const exists = await User.findByUsername(username);
     if (exists) {
       ctx.status = 409; // Conflict
+      return;
+    }
+
+    if(invitecode != 19141914){// 초대코드 확인
+      ctx.status = 401;
       return;
     }
 

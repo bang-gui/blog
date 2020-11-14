@@ -42,12 +42,7 @@ const RegisterForm = ({ history }) => {
       changeField({ form: 'register', key: 'passwordConfirm', value: '' });
       return;
     }
-    if(invitecode !== '19141914'){
-      setError('존재하지 않는 초대코드입니다.');
-      changeField({ form: 'register', key:'invitecode', value:''});
-      return;
-    }
-    dispatch(register({ username, password }));
+    dispatch(register({ username, password, invitecode }));
   };
 
   // 컴포넌트가 처음 렌더링 될 때 form 을 초기화함
@@ -63,6 +58,12 @@ const RegisterForm = ({ history }) => {
         setError('이미 존재하는 계정명입니다.');
         return;
       }
+
+      if (authError.response.status === 401) {
+        setError('초대코드를 확인해주세요');
+        return;
+      }
+
       // 기타 이유
       setError('회원가입 실패');
       return;
