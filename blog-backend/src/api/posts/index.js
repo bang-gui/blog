@@ -14,4 +14,5 @@ post.patch('/', checkLoggedIn, postsCtrl.checkOwnPost, postsCtrl.update);
 
 posts.use('/:id', postsCtrl.getPostById, post.routes());
 
+
 export default posts;

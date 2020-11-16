@@ -130,12 +130,13 @@ export const list = async ctx => {
   };
 
   try {
-    const posts = await Post.find(query)
+    const posts = await Post.find(query).populate('author', 'username')
       .sort({ _id: -1 })
       .limit(10)
       .skip((page - 1) * 10)
       .lean()
       .exec();
+      
     const postCount = await Post.countDocuments(query).exec();
     ctx.set('Last-Page', Math.ceil(postCount / 10));
     ctx.body = posts.map(post => ({

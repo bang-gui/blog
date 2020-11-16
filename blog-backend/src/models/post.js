@@ -1,5 +1,4 @@
 import mongoose, { Schema } from 'mongoose';
-import { required } from 'joi';
 
 const PostSchema = new Schema({
   title: String,
@@ -9,7 +8,7 @@ const PostSchema = new Schema({
     type: Date,
     default: Date.now, // 현재 날짜를 기본 값으로 지정
   },
-    author:{type:mongoose.Schema.Types.ObjectId, ref:'User', required:true},
+    author:{type:mongoose.Types.ObjectId, ref:'User', required:true},
 });
 
 const Post = mongoose.model('Post', PostSchema);
