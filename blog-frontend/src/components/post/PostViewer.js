@@ -4,7 +4,6 @@ import palette from '../../lib/styles/palette';
 import Responsive from '../common/Responsive';
 import SubInfo from '../common/SubInfo';
 import Tags from '../common/Tags';
-import CommentInput from '../comments/CommentInput';
 import { Helmet } from 'react-helmet-async';
 
 const PostViewerBlock = styled(Responsive)`
@@ -58,7 +57,6 @@ const PostViewer = ({ post, error, loading, actionButtons }) => {
       </PostHead>
       {actionButtons}
       <PostContent dangerouslySetInnerHTML={{ __html: body }} />
-      <CommentInput></CommentInput>
     </PostViewerBlock>
   );
 };
