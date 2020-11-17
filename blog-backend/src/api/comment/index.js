@@ -1,15 +1,16 @@
 import Router from 'koa-router';
-import checkLoggedIn from '../../lib/checkLoggedIn';
+import * as commentsCtrl from './comments.ctrl';
 
 const comments = new Router();
 
-comments.post('/',ctx =>{
-    ctx.body = '댓글 포스트'
-});
-comments.get('/',ctx =>{
-    ctx.body = '댓글 겟'
-});
-comments.delete('/commentsId')
+comments.post('/', commentsCtrl.write);
 
+comments.get('/', (ctx) => {
+  ctx.body = '댓글 겟';
+});
+
+comments.delete('/:commentsId', (ctx) => {
+  ctx.body = '댓글 델리트';
+});
 
 export default comments;
