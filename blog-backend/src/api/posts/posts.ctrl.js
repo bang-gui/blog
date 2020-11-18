@@ -43,7 +43,7 @@ export const getPostById = async (ctx, next) => {
       return;
     }
     ctx.state.post = post;
-    console.log(post);
+    //console.log(post);
     return next();
   } catch (e) {
     ctx.throw(500, e);

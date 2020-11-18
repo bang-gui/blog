@@ -1,14 +1,24 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import CommentsViewer from '../../components/comments/CommentsViewer';
 import { changeInput, writeComment } from '../../modules/comments';
+import { listComments } from '../../modules/comments';
 
 const CommentsViewerContainer = ({ match, history }) => {
   const { postId } = match.params;
-
-  const body = useSelector((state) => state.comments.body);
   const dispatch = useDispatch();
+  const { body, comments, loading, commentError } = useSelector(
+    ({comments, loading}) => ({
+      body: comments.body,
+      comments: comments.comments,
+      loading: loading['comments/LIST_COMMENTS'],
+      commentError: comments.commentError,
+    }),
+  );
+  useEffect(() => {
+    dispatch(listComments(postId));
+  }, [dispatch]);
 
   const onChangeCommentInput = useCallback(
     (body) => dispatch(changeInput(body)),
@@ -21,9 +31,11 @@ const CommentsViewerContainer = ({ match, history }) => {
 
   return (
     <CommentsViewer
-      onChangeCommentInput={onChangeCommentInput}
+      loading={loading}
       body={body}
+      onChangeCommentInput={onChangeCommentInput}
       onWriteComment={onWriteComment}
+      comments={comments}
     />
   );
 };

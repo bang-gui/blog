@@ -15,48 +15,77 @@ const [
   WRITE_COMMENT_FAILURE,
 ] = createRequestActionTypes('write/WRITE_COMMENT');
 
-export const changeInput = createAction(CHANGE_INPUT, (input) => input);
-export const writeComment = createAction(WRITE_COMMENT, ( id, body ) => ({
+
+const [
+  LIST_COMMENT,
+  LIST_COMMENT_SUCCESS,
+  LIST_COMMENT_FAILURE,
+] = createRequestActionTypes('list/LIST_COMMENT');
+
+
+export const changeInput = createAction(CHANGE_INPUT, (body) => body);
+export const writeComment = createAction(WRITE_COMMENT, (id, body) => ({
   id: id,
   body: body,
 }));
+export const listComments = createAction(LIST_COMMENT,(id)=> id );
+
+
 
 const writeCommentSaga = createRequestSaga(
   WRITE_COMMENT,
   commentAPI.writeComment,
 );
+
+
+const listCommentSaga = createRequestSaga(
+  LIST_COMMENT,
+  commentAPI.listComments,
+);
+
+
 export function* CommentSaga() {
   yield takeLatest(WRITE_COMMENT, writeCommentSaga);
 }
 
+export function* CommentsSaga() {
+  yield takeLatest(LIST_COMMENT, listCommentSaga);
+}
+
 const initialState = {
   body: '',
-  comment: null,
+  comments: null,
   commentError: null,
 };
 
 const comments = handleActions(
   {
     [INITIALIZE]: (state) => initialState,
-    [CHANGE_INPUT]: (state, { payload: body }) => {
-      return {
-        ...state,
-        body: body,
-      };
-    },
-    [WRITE_COMMENT]: state => ({
+    [CHANGE_INPUT]: (state, { payload: body }) => ({
       ...state,
-      // comment와 commentError를 초기화
-      comment: null,
+      body: body,
+    }),
+    [WRITE_COMMENT]: (state) => ({
+      // comments와 commentError를 초기화
+      ...state,
+      body:'',
       commentError: null,
     }),
     // 댓글 작성 성공
     [WRITE_COMMENT_SUCCESS]: (state, { payload: comment }) => ({
       ...state,
-      comment,
+      commentError:null
     }),
     // 댓글 작성 실패
     [WRITE_COMMENT_FAILURE]: (state, { payload: commentError }) => ({
+      ...state,
+      commentError,
+    }),
+    [LIST_COMMENT_SUCCESS]: (state, { payload: comments }) => ({
+      ...state,
+      comments,
+    }),
+    [LIST_COMMENT_FAILURE]: (state, { payload: commentError }) => ({
       ...state,
       commentError,
     }),

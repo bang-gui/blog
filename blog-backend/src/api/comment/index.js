@@ -5,9 +5,7 @@ const comments = new Router();
 
 comments.post('/', commentsCtrl.write);
 
-comments.get('/', (ctx) => {
-  ctx.body = '댓글 겟';
-});
+comments.get('/', commentsCtrl.list);
 
 comments.delete('/:commentsId', (ctx) => {
   ctx.body = '댓글 델리트';
