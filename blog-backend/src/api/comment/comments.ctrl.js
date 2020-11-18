@@ -14,7 +14,8 @@ export const write = async ctx => {
   try {
     //console.log(ctx.state.user._id,);
     await comment.save();
-    ctx.body = comment;
+    const comments = await Comment.find({post: ctx.params.id}).sort({createdAt:-1}).lean().exec();
+    ctx.body = comments;
   } catch (e) {
     ctx.throw(500, e);
   }

@@ -18,7 +18,7 @@ const CommentsViewerContainer = ({ match, history }) => {
   );
   useEffect(() => {
     dispatch(listComments(postId));
-  }, [dispatch]);
+  }, [dispatch, postId]);
 
   const onChangeCommentInput = useCallback(
     (body) => dispatch(changeInput(body)),

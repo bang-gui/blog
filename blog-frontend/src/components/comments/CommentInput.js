@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import TextareaAutosize from 'react-autosize-textarea';
 
 const StyledCommentInput = styled.input`
   width: 100%;

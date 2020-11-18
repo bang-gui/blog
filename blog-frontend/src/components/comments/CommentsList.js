@@ -1,11 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import Responsive from '../common/Responsive';
-import Button from '../common/Button';
 import palette from '../../lib/styles/palette';
 import SubInfo from '../common/SubInfo';
-import Tags from '../common/Tags';
-import { Link } from 'react-router-dom';
 
 const CommentsListBlock = styled(Responsive)`
   margin-top: 3rem;

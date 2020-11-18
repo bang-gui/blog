@@ -72,8 +72,9 @@ const comments = handleActions(
       commentError: null,
     }),
     // 댓글 작성 성공
-    [WRITE_COMMENT_SUCCESS]: (state, { payload: comment }) => ({
+    [WRITE_COMMENT_SUCCESS]: (state, { payload: comments }) => ({
       ...state,
+      comments: comments,
       commentError:null
     }),
     // 댓글 작성 실패
