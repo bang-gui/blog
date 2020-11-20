@@ -26,9 +26,10 @@ const CommentItem = ({ comment }) => {
   return (
     <CommentItemBlock>
       <SubInfo
-        username={'john1913'}
-        publishedDate={'2021.01.11'}
+        username={comment.author.username}
+        publishedDate={comment.createdAt}
       />
+      {/* comment.author.username */}
       <p>{comment.body}</p>
     </CommentItemBlock>
   );

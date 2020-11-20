@@ -12,9 +12,9 @@ export const write = async ctx => {
     body: body.toString(),
   });
   try {
-    //console.log(ctx.state.user._id,);
+    console.log(ctx.state.user);
     await comment.save();
-    const comments = await Comment.find({post: ctx.params.id}).sort({createdAt:-1}).lean().exec();
+    const comments = await Comment.find({ post: ctx.params.id }).populate('author', 'username').sort({ createdAt: 1 }).lean().exec();
     ctx.body = comments;
   } catch (e) {
     ctx.throw(500, e);
@@ -23,8 +23,19 @@ export const write = async ctx => {
 
 export const list = async ctx => {
   try {
-   const comments = await Comment.find({post: ctx.params.id}).sort({createdAt:-1}).lean().exec();
+    const comments = await Comment.find({ post: ctx.params.id }).populate('author', 'username').sort({ createdAt: 1 }).lean().exec();
+    console.log(comments);
     ctx.body = comments;
+  } catch (e) {
+    ctx.throw(500, e);
+  }
+};
+
+export const remove = async ctx => {
+  const { id } = ctx.params;
+  try {
+    await Comment.findByIdAndRemove(id).exec();
+    ctx.status = 204; // No Content (성공은 했지만 응답할 데이터는 없음)
   } catch (e) {
     ctx.throw(500, e);
   }

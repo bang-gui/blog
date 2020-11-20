@@ -7,8 +7,6 @@ comments.post('/', commentsCtrl.write);
 
 comments.get('/', commentsCtrl.list);
 
-comments.delete('/:commentsId', (ctx) => {
-  ctx.body = '댓글 델리트';
-});
+//comments.delete('/:commentsId', commentsCtrl.remove);
 
 export default comments;
