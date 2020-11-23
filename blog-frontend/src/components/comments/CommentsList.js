@@ -21,6 +21,28 @@ const CommentItemBlock = styled.div`
     margin-top: 1rem;
   }
 `;
+const CommentActionButtonsBlock = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 2rem;
+  margin-top: -1.5rem;
+`;
+
+const ActionButton = styled.span`
+  color: ${palette.gray[6]};
+  border: none;
+  outline: none;
+  font-size: 0.875rem;
+  cursor: pointer;
+  &:hover {
+    text-decoration:underline;
+    background: ${palette.gray[1]};
+    color: ${palette.cyan[7]};
+  }
+  & + & {
+    margin-left: 0.25rem;
+  }
+`;
 
 const CommentItem = ({ user, comment, onToggleAskRemove }) => {
   return (
@@ -30,10 +52,10 @@ const CommentItem = ({ user, comment, onToggleAskRemove }) => {
         publishedDate={comment.createdAt}
       />
      {user && user._id === comment.author._id && (
-        <div>
-          <button>수정</button>
-          <button onClick={()=>onToggleAskRemove(comment._id)}>삭제</button>
-        </div>
+        <CommentActionButtonsBlock>
+          <ActionButton>수정</ActionButton>
+          <ActionButton onClick={()=>onToggleAskRemove(comment._id)}>삭제</ActionButton>
+        </CommentActionButtonsBlock>
       )}
       <p>{comment.body}</p>
     </CommentItemBlock>

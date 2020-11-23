@@ -7,19 +7,19 @@ import { takeLatest } from 'redux-saga/effects';
 
 const INITIALIZE = 'write/INITIALIZE'; // 모든 내용 초기화
 
-const CHANGE_INPUT = 'comments/CHANGE_INPUT';
+const CHANGE_INPUT = 'comment/CHANGE_INPUT';
 
 const [
   WRITE_COMMENT,
   WRITE_COMMENT_SUCCESS,
   WRITE_COMMENT_FAILURE,
-] = createRequestActionTypes('write/WRITE_COMMENT');
+] = createRequestActionTypes('comment/WRITE_COMMENT');
 
 const [
   LIST_COMMENT,
   LIST_COMMENT_SUCCESS,
   LIST_COMMENT_FAILURE,
-] = createRequestActionTypes('list/LIST_COMMENT');
+] = createRequestActionTypes('comment/LIST_COMMENT');
 
 const TOGGLE_ASK_REMOVE = 'comment/TOGGLE_ASK_REMOVE';
 
@@ -29,10 +29,13 @@ const [
   REMOVE_COMMENT_FAILURE,
 ] = createRequestActionTypes('comment/REMOVE_COMMENT');
 
+const CANCEL_REMOVE_COMMENT = 'comment/CANCEL_REMOVE_COMMENT';
+
+
 export const changeInput = createAction(CHANGE_INPUT, (body) => body);
-export const writeComment = createAction(WRITE_COMMENT, (id, body) => ({
-  id: id,
-  body: body,
+export const writeComment = createAction(WRITE_COMMENT, (postId, body) => ({
+  postId,
+  body
 }));
 
 export const toggleAskRemove = createAction(TOGGLE_ASK_REMOVE);
@@ -43,6 +46,7 @@ export const removeComment = createAction(
   REMOVE_COMMENT,
   (postId, commentId) => ({ postId, commentId }),
 );
+export const cancelRemoveComment = createAction(CANCEL_REMOVE_COMMENT);
 
 const writeCommentSaga = createRequestSaga(
   WRITE_COMMENT,
@@ -72,7 +76,7 @@ const initialState = {
   askRemove: false,
   removeComment: {
     commentId: null,
-    visible: false,
+    // visible: false,
   },
 };
 
@@ -123,6 +127,13 @@ const comments = handleActions(
       ...state,
       comments: comments,
     }),
+    [CANCEL_REMOVE_COMMENT]:(state)=>({
+      ...state,
+      askRemove: !state.askRemove,
+      removeComment: {
+        commentId: null,
+      },
+    })
   },
   initialState,
 );

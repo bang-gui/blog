@@ -7,7 +7,7 @@ import {
   writeComment,
   toggleAskRemove,
 } from '../../modules/comments';
-import { listComments, removeComment } from '../../modules/comments';
+import { listComments, removeComment, cancelRemoveComment } from '../../modules/comments';
 import AskModal from '../../components/common/AskModal';
 
 const CommentsViewerContainer = ({ match, history }) => {
@@ -24,6 +24,7 @@ const CommentsViewerContainer = ({ match, history }) => {
     }),
   );
   useEffect(() => {
+    console.log(match);
     dispatch(listComments(postId));
   }, [dispatch, postId]);
 
@@ -38,6 +39,10 @@ const CommentsViewerContainer = ({ match, history }) => {
 
   const onToggleAskRemove = useCallback((commentId) => {
     dispatch(toggleAskRemove(commentId));
+  });
+
+  const onCancelRemoveComment = useCallback(()=>{
+    dispatch(cancelRemoveComment())
   });
 
   const onConfirmRemove = useCallback(() => {
@@ -62,7 +67,7 @@ const CommentsViewerContainer = ({ match, history }) => {
         confirmText="삭제하기"
         cancelText="취소"
         onConfirm={onConfirmRemove}
-        onCancel={onToggleAskRemove}
+        onCancel={onCancelRemoveComment}
         visible={askRemove}
       />
     </>
