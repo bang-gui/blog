@@ -7,6 +7,6 @@ comments.post('/', commentsCtrl.write);
 
 comments.get('/', commentsCtrl.list);
 
-//comments.delete('/:commentsId', commentsCtrl.remove);
+comments.delete('/:commentId', commentsCtrl.remove);
 
 export default comments;

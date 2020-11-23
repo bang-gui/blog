@@ -32,10 +32,12 @@ export const list = async ctx => {
 };
 
 export const remove = async ctx => {
-  const { id } = ctx.params;
+   const { commentId } = ctx.params;
   try {
-    await Comment.findByIdAndRemove(id).exec();
-    ctx.status = 204; // No Content (성공은 했지만 응답할 데이터는 없음)
+    console.log(ctx.params);
+    await Comment.findByIdAndRemove(commentId).exec();
+    const comments = await Comment.find({ post: ctx.params.id }).populate('author', 'username').sort({ createdAt: 1 }).lean().exec();
+    ctx.body = comments;
   } catch (e) {
     ctx.throw(500, e);
   }

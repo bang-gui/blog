@@ -22,27 +22,32 @@ const CommentItemBlock = styled.div`
   }
 `;
 
-const CommentItem = ({ comment }) => {
+const CommentItem = ({ user, comment, onToggleAskRemove }) => {
   return (
     <CommentItemBlock>
       <SubInfo
         username={comment.author.username}
         publishedDate={comment.createdAt}
       />
-      {/* comment.author.username */}
+     {user && user._id === comment.author._id && (
+        <div>
+          <button>수정</button>
+          <button onClick={()=>onToggleAskRemove(comment._id)}>삭제</button>
+        </div>
+      )}
       <p>{comment.body}</p>
     </CommentItemBlock>
   );
 };
 
-const CommentsList = ({loading, comments}) => {
+const CommentsList = ({loading, user, comments, onToggleAskRemove}) => {
   return (
     <CommentsListBlock>
         <div>
         {!loading && comments && (
         <div>
           {comments.map(comment => (
-            <CommentItem comment={comment} key={comment._id} />
+            <CommentItem user={user} comment={comment} onToggleAskRemove={onToggleAskRemove} key={comment._id} />
           ))}
         </div>
       )}

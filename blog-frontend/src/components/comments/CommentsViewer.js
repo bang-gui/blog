@@ -16,14 +16,14 @@ const CommentButtonBlock = styled.div`
   justify-content: flex-end;
 `;
 
-const CommentsViewer = ({loading, body, onChangeCommentInput, onWriteComment, comments }) => {
+const CommentsViewer = ({loading, user, body, onChangeCommentInput, onWriteComment, comments, onToggleAskRemove }) => {
   return (
     <CommentsViewerBlock>
       <CommentInput onChangeCommentInput={onChangeCommentInput} body={body} />
       <CommentButtonBlock>
         <Button onClick={onWriteComment}>댓글 작성</Button>
       </CommentButtonBlock>
-      <CommentsList comments={comments} loading={loading}/>
+      <CommentsList user={user} comments={comments} loading={loading} onToggleAskRemove={onToggleAskRemove} />
     </CommentsViewerBlock>
   );
 };
