@@ -7,7 +7,11 @@ import {
   writeComment,
   toggleAskRemove,
 } from '../../modules/comments';
-import { listComments, removeComment, cancelRemoveComment } from '../../modules/comments';
+import {
+  listComments,
+  removeComment,
+  cancelRemoveComment,
+} from '../../modules/comments';
 import AskModal from '../../components/common/AskModal';
 
 const CommentsViewerContainer = ({ match, history }) => {
@@ -24,7 +28,7 @@ const CommentsViewerContainer = ({ match, history }) => {
     }),
   );
   useEffect(() => {
-    console.log(match);
+    // console.log(match);
     dispatch(listComments(postId));
   }, [dispatch, postId]);
 
@@ -35,20 +39,22 @@ const CommentsViewerContainer = ({ match, history }) => {
 
   const onWriteComment = useCallback(() => {
     dispatch(writeComment(postId, body));
-  });
+  }, [dispatch, postId, body]);
 
-  const onToggleAskRemove = useCallback((commentId) => {
-    dispatch(toggleAskRemove(commentId));
-  });
+  const onToggleAskRemove = useCallback(
+    (commentId) => {
+      dispatch(toggleAskRemove(commentId));
+    },
+    [dispatch],
+  );
 
-  const onCancelRemoveComment = useCallback(()=>{
-    dispatch(cancelRemoveComment())
-  });
+  const onCancelRemoveComment = () => {
+    dispatch(cancelRemoveComment());
+  };
 
   const onConfirmRemove = useCallback(() => {
-    console.log('삭제');
     dispatch(removeComment(postId, commentId));
-  });
+  }, [dispatch, postId, commentId]);
 
   return (
     <>

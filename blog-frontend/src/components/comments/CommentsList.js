@@ -48,10 +48,10 @@ const CommentItem = ({ user, comment, onToggleAskRemove }) => {
   return (
     <CommentItemBlock>
       <SubInfo
-        username={comment.author.username}
+        username={comment.authorId.username}
         publishedDate={comment.createdAt}
       />
-     {user && user._id === comment.author._id && (
+     {user && user._id === comment.authorId._id && (
         <CommentActionButtonsBlock>
           <ActionButton>수정</ActionButton>
           <ActionButton onClick={()=>onToggleAskRemove(comment._id)}>삭제</ActionButton>
